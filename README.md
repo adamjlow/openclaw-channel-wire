@@ -101,7 +101,7 @@ Node 24 is required, because `openclaw`'s install script refuses older versions 
 dependency.
 
 ```bash
-npm ci --legacy-peer-deps
+npm ci --legacy-peer-deps --ignore-scripts   # like OpenClaw's own plugin installs
 npm run typecheck
 npm run lint
 npm test

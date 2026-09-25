@@ -37,7 +37,7 @@ Don't write an OpenClaw or Wire SDK identifier until you have seen it in the ins
 
 ## Commands (Node 24 required)
 ```bash
-npm ci --legacy-peer-deps
+npm ci --legacy-peer-deps --ignore-scripts
 npm run typecheck && npm run lint && npm test
 npm run build && npm run manifest:sync
 npm run smoke                 # credential-free loader test in Docker

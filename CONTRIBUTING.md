@@ -16,7 +16,7 @@ Thanks for helping. Issues and pull requests are welcome.
 Node 24 or newer, plus Docker for the smoke test and harness.
 
 ```bash
-npm ci --legacy-peer-deps
+npm ci --legacy-peer-deps --ignore-scripts
 npm run typecheck && npm run lint && npm test
 npm run smoke
 ```

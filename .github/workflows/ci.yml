@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     container: node:24-trixie-slim
     steps:
-      - uses: actions/checkout@v4
-      - run: npm ci --legacy-peer-deps
+      - uses: actions/checkout@v7
+      - run: npm ci --legacy-peer-deps --ignore-scripts
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test # includes the manifest drift check
@@ -31,9 +31,9 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
-      - run: npm ci --legacy-peer-deps
+      - run: npm ci --legacy-peer-deps --ignore-scripts
       - run: npm run smoke
