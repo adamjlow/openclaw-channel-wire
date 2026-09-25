@@ -1,0 +1,22 @@
+# One gateway, one Wire app identity. Never scale this service above 1: the
+# Wire SDK state (apps.db + CoreCrypto) is single-writer.
+name: openclaw-channel-wire
+
+services:
+  gateway:
+    build: .
+    image: openclaw-channel-wire-test:local
+    env_file: .env
+    volumes:
+      - state:/home/node/.openclaw
+      - ./plugin:/plugin:ro
+    ports:
+      - "127.0.0.1:18789:18789"
+    stop_grace_period: 30s
+    restart: "no"
+
+volumes:
+  # Holds OpenClaw state, including the Wire SDK storage (the app's crypto
+  # identity and rotated token). Deleting it registers a fresh device.
+  state:
+    name: openclaw-channel-wire-state

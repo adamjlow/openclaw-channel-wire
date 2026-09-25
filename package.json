@@ -1,0 +1,87 @@
+{
+  "name": "openclaw-channel-wire",
+  "version": "1.0.0",
+  "description": "OpenClaw channel plugin for Wire: end-to-end encrypted Wire conversations via a Wire app",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist/",
+    "openclaw.plugin.json",
+    "vendor/",
+    "scripts/register-app.mjs",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=24.16.0 <25 || >=26.1.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "manifest:sync": "npm run build && node scripts/sync-manifest.mjs",
+    "prepack": "npm run build",
+    "harness": "test/docker/harness.sh",
+    "smoke": "test/docker/smoke.sh"
+  },
+  "dependencies": {
+    "@wireapp/wire-apps-js-sdk": "file:vendor/wireapp-wire-apps-js-sdk-0.1.0-pr349.tgz",
+    "zod": "4.6.5"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.9.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.13.6",
+    "eslint": "^10.11.0",
+    "openclaw": "2026.9.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.1",
+    "vitest": "^4.1.4"
+  },
+  "openclaw": {
+    "extensions": [
+      "./src/index.ts"
+    ],
+    "runtimeExtensions": [
+      "./dist/index.js"
+    ],
+    "setupEntry": "./src/setup-entry.ts",
+    "runtimeSetupEntry": "./dist/setup-entry.js",
+    "channel": {
+      "id": "wire",
+      "label": "Wire",
+      "selectionLabel": "Wire (app)",
+      "detailLabel": "Wire",
+      "docsPath": "/channels/wire",
+      "docsLabel": "wire",
+      "blurb": "end-to-end encrypted Wire conversations via a Wire app, with DM pairing controls."
+    },
+    "install": {
+      "minHostVersion": ">=2026.9.6"
+    },
+    "compat": {
+      "pluginApi": ">=2026.9.6"
+    }
+  },
+  "bundleDependencies": [
+    "@wireapp/wire-apps-js-sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamjlow/openclaw-channel-wire.git"
+  },
+  "homepage": "https://github.com/adamjlow/openclaw-channel-wire#readme",
+  "bugs": {
+    "url": "https://github.com/adamjlow/openclaw-channel-wire/issues"
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "wire",
+    "channel",
+    "mls",
+    "e2ee"
+  ]
+}

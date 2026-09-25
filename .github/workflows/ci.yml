@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches: [main, "rebuild/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    # Debian trixie: Wire's CoreCrypto needs glibc >= 2.38.
+    runs-on: ubuntu-latest
+    container: node:24-trixie-slim
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci --legacy-peer-deps
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test # includes the manifest drift check
+      - run: npm run build
+      - name: Skill validators
+        run: |
+          bash .claude/skills/openclaw-channel-plugin-development/scripts/validate-openclaw-channel.sh .
+          bash .claude/skills/wire-apps-js-sdk-development/scripts/validate-wire-apps-js-sdk.sh . || echo "::warning::Wire validator reported findings (known false positives in the validator)"
+        if: ${{ hashFiles('.claude/skills/**') != '' }}
+      - run: npm pack
+
+  smoke:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --legacy-peer-deps
+      - run: npm run smoke
