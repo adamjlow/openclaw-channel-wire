@@ -1,8 +1,27 @@
 # openclaw-channel-wire
 
-An [OpenClaw](https://openclaw.ai) channel plugin for [Wire](https://wire.com). It connects your OpenClaw
-assistant to Wire's end-to-end encrypted (MLS) conversations as a Wire app, built on the official
-[`@wireapp/wire-apps-js-sdk`](https://github.com/wireapp/wire-apps-js-sdk).
+> [!CAUTION]
+> **Read this before you connect anything.** Wire is built to keep conversations private: messages
+> are end-to-end encrypted, so only the people in a conversation can read them. This plugin
+> deliberately gives an AI assistant a seat in those conversations. Everything it can read (the
+> messages it receives and the files people send it) is decrypted and passed to
+> [OpenClaw](https://openclaw.ai), and from there to whichever AI model provider you configure. That
+> provider is a third party outside Wire's encryption, with its own data handling, retention and
+> jurisdiction.
+>
+> Connecting Wire to an AI agent therefore weakens the protection Wire gives you, and an agent with
+> tools can act on what it reads. Use it only if you understand and accept that trade-off:
+> - Keep access tight (`dmPolicy: "allowlist"` or pairing, and `requireMention` in groups).
+> - Don't add the app to conversations that hold sensitive information.
+> - Choose your model provider as carefully as you would choose who else can read these
+>   messages.
+> - Tell the people in a conversation when an assistant is present.
+
+An example of what you can build on Wire's JavaScript SDK,
+[`@wireapp/wire-apps-js-sdk`](https://github.com/wireapp/wire-apps-js-sdk): an
+[OpenClaw](https://openclaw.ai) channel plugin that joins [Wire](https://wire.com) conversations as a
+Wire app and connects them to an OpenClaw assistant. Use it as a working plugin, or as a reference for
+building your own integrations with the SDK.
 
 - 1:1 conversations, with DM pairing (default), allowlists or open access
 - Group conversations, answering when @mentioned, with a sender allowlist
